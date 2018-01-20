@@ -1,0 +1,54 @@
+page-home {
+  .home-bg {
+    // background-image: url('../../assets/images/BACKGROUND.png');
+    // background-repeat: round;
+    background-color: #dedede;
+   }
+
+   .home-big-btn {
+     height: auto;
+     border-radius: 10px !important;
+   }
+
+   .home-btn-container {
+    padding-top: 40%;
+   }
+
+   .home-btn-container {
+    padding-top: 40%;
+   }
+
+   .home-center-image {
+    height: 150px;
+    width: 110px;
+   }
+
+   .footer-label{
+    margin: 0px;
+    margin-bottom: 2px;
+    color: #424242;
+    font-size: 1rem;
+    font-family: sans-serif;
+
+   }
+
+   .home-footer{
+    background-color: blue;
+   }
+
+   .home-center-image-wrapper {
+    // padding-left: 7%;
+   }
+
+   .footer-image {
+    height: 30px;
+   }
+
+   .care-btn {
+    border-bottom: solid #c00707 8px;
+   }
+
+   .insure-btn {
+    border-bottom: solid #05b886 8px;
+   }
+}
