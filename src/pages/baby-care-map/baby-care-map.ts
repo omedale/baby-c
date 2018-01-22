@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 import { ConnectivityProvider } from '../../providers/connectivity/connectivity';
@@ -29,7 +29,7 @@ export class BabyCareMapPage {
   loadedMap: any;
   mockLocation: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public geolocation: Geolocation, private spinnerDialog: SpinnerDialog, public connectivityService: ConnectivityProvider, public locationServices: LocationsProvider) {
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public geolocation: Geolocation, private spinnerDialog: SpinnerDialog, public connectivityService: ConnectivityProvider, public locationServices: LocationsProvider) {
     this.mockLocation = [
       {
         "title": "City Hall",
@@ -82,14 +82,17 @@ export class BabyCareMapPage {
   ionViewDidLoad() {
     //  this.locationServices.load();
     // console.log(this.loadedMap);
-    this.loadMap();
+    this.platform.ready().then(() => {
+      this.loadMap();
+    });
+
   }
 
   loadMap() {
     this.spinnerDialog.show(null, null, true)
     this.geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      this.mockLocation.push({ title: "Ketu", latitude: position.coords.latitude, longitude: position.coords.longitude })
+
       let mapOptions = {
         center: latLng,
         zoom: 15,
@@ -99,6 +102,7 @@ export class BabyCareMapPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       let service = new google.maps.places.PlacesService(this.map);
+
       service.nearbySearch({
         location: latLng,
         radius: 500,
@@ -129,7 +133,6 @@ export class BabyCareMapPage {
   }
 
   createMarker(place) {
-    var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
       map: this.map,
       position: place.geometry.location
